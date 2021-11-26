@@ -9,7 +9,9 @@ class Cache:
         self.cache = {}
         self.HOURS_PARAM = 47.5  # Get max forecast
         self.gather_functions()
-        asyncio.run(self.periodic_task(refresh_rate, self.create_cache))
+
+    def start_caching(self):
+        asyncio.run(self.periodic_task(self.refresh_rate, self.create_cache))
     
     async def periodic_task(self, refresh_rate, task):
         await task()  # initial run of task
@@ -23,17 +25,17 @@ class Cache:
             func = functions['func']
             self.cache[func.__name__] = {}
             params = functions['params']
-            print(func.__name__)
+            print(f"Caching function {func.__name__}")
             if isinstance(params, list):
                 for param in params:
-                    print(param)
+                    print(f"\t with params: {param}")
                     if isinstance(param, tuple):
                         result = await func(*param)
                     else:
                         result = await func(param)
                     self.cache[func.__name__][str(param)] = result
             elif len(params):
-                print(param)
+                print(f"\t with param: {param}")
                 result = await func(*param if isinstance(param, tuple) else param)
                 self.cache[func.__name__][params] = result
             else:
