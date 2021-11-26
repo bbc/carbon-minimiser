@@ -1,4 +1,4 @@
-from carbon_minimiser.api.app import app
+from minimiser_api.app import app
 import argparse
 
 
