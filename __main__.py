@@ -1,4 +1,4 @@
-from minimiser_api.app import app
+from minimiser_api.app import app, min
 import argparse
 from cache.cache import Cache
 import threading
@@ -16,8 +16,11 @@ parser.add_argument('-p')
 args = parser.parse_args()
 
 if args.c:
+    min.set_cache(True)
     thread = threading.Thread(target=cache, daemon=True)
     thread.start()
+else:
+    min.set_cache(False)
 if args.p:
     port = int(args.p)
 else:

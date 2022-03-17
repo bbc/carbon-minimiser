@@ -5,8 +5,10 @@ from typing import List
 
 
 class Minimiser:
-    def __init__(self, cache=True):
+    def __init__(self):
         self.api = CarbonAPI()
+
+    def set_cache(self, cache):
         self.cache = Cache(None) if cache else False
 
     @staticmethod
