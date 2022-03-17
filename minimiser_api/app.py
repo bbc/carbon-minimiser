@@ -3,7 +3,7 @@ from sanic.response import json
 from minimiser_api.minimiser import Minimiser
 from carbon_api.carbon_api_wrapper.carbon import REGIONS
 
-app = Sanic("Carbon Minimiser")
+app = Sanic("Carbon_Minimiser")
 min = Minimiser()
 locations = ['N_SCOTLAND', 'S_SCOTLAND', 'NW_ENGLAND', 'NE_ENGLAND', 'YORKSHIRE',
              'N_WALES', 'S_WALES', 'W_MIDLANDS', 'E_MIDLANDS', 'E_ENGLAND', 'SW_ENGLAND',
