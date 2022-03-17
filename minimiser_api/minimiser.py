@@ -1,11 +1,13 @@
 from carbon_api.carbon_api_wrapper.carbon import CarbonAPI
+from cache.cache import Cache
 from itertools import islice
 from typing import List
 
 
 class Minimiser:
-    def __init__(self):
+    def __init__(self, cache=True):
         self.api = CarbonAPI()
+        self.cache = Cache(None) if cache else False
 
     @staticmethod
     def _window(seq: List, n: int):
@@ -30,7 +32,10 @@ class Minimiser:
         """
         options = []
         for location in locations:
-            intensity, index = await self.api.current_region_intensity(location)
+            if self.cache:
+                intensity, index = self.cache.read_cache()["current_region_intensity"][location]
+            else:
+                intensity, index = await self.api.current_region_intensity(location)
             options.append({"location": location, "cost": intensity, "index": index})
         sorted_locations = sorted(options, key=lambda x: x['cost'])
         return sorted_locations[0]
@@ -42,7 +47,13 @@ class Minimiser:
         :param num_options: define the number of top options returned
         :return: number of hours and mins till optimal time as +hh:mm string
         """
-        times = await self.api.region_forecast_range(location, time_range[1])
+        if self.cache:
+            times = self.cache.read_cache()["region_forecast_range"][f"('{location}', 47.5)"]
+            # cut upper time range out of cache
+            index = int(time_range[1]*2) if time_range[1] < 48 else 95
+            times = times[0: index + 1]
+        else:
+            times = await self.api.region_forecast_range(location, time_range[1])
         # cut off times before min time range
         times = times[int(time_range[0]*2):]
         sorted_times = sorted(times, key=lambda x: x['forecast'])
@@ -59,7 +70,10 @@ class Minimiser:
         """
         options = []
         for location in locations:
-            times = await self.api.region_forecast_range(location, 48)
+            if self.cache:
+                times = self.cache.read_cache()["region_forecast_range"][f"('{location}', 47.5)"]
+            else:
+                times = await self.api.region_forecast_range(location, 48)
             # cut off times before min time range
             times = times[int(time_range[0]*2):]
             for time in times:
@@ -81,7 +95,13 @@ class Minimiser:
         :return: number of hours and mins from now as +hh:mm string
         """
         # request times up until max time range
-        times = await self.api.region_forecast_range(location, time_range[1])
+        if self.cache:
+            times = self.cache.read_cache()["region_forecast_range"][f"('{location}', 47.5)"]
+            # cut upper time range out of cache
+            index = int(time_range[1]*2) if time_range[1] < 48 else 95
+            times = times[0: index + 1]
+        else:
+            times = await self.api.region_forecast_range(location, time_range[1])
         # cut off times before min time range
         times = times[int(time_range[0]*2):]
         costs = []
@@ -106,7 +126,13 @@ class Minimiser:
         """
         costs = []
         for location in locations:
-            times = await self.api.region_forecast_range(location, time_range[1])
+            if self.cache:
+                times = self.cache.read_cache()["region_forecast_range"][f"('{location}', 47.5)"]
+                # cut upper time range out of cache
+                index = int(time_range[1]*2) if time_range[1] < 48 else 95
+                times = times[0: index + 1]
+            else:
+                times = await self.api.region_forecast_range(location, time_range[1])
             # cut off times before min time range
             times = times[int(time_range[0]*2):]
             # convert hours into half hours

@@ -6,7 +6,7 @@ from carbon_api.carbon_api_wrapper.carbon import CarbonAPI
 class TestCarbonMinimiser(TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.min = Minimiser()
+        cls.min = Minimiser(cache=False)
 
     async def test_optimal_location_now(self):
         data = [(231, 'moderate'), (131, 'moderate'), (331, 'moderate')]
