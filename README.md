@@ -9,11 +9,11 @@ This information allows you to estimate the optimal time to perform actions to r
 
 This API allows you to answer questions like:
 
-```What is the best 4 hour window to charge my electric car?```
+```What is the best 4 hour window to charge my electric car in the next 12 hours?```
 
 or
 
-```Which UK server location should I deploy this intensive process to?```
+```Which of our UK server locations should I deploy this process to for minimal carbon output?```
 
 # Important Note
 
