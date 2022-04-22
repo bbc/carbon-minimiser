@@ -1,7 +1,7 @@
 from sanic import Sanic
 from sanic.response import json
-from minimiser_api.minimiser import Minimiser
-from carbon_api.carbon_api_wrapper.carbon import REGIONS
+from carbon_minimiser.minimiser_api.minimiser import Minimiser
+from carbon_minimiser.carbon_api.carbon_api_wrapper.carbon import REGIONS
 
 app = Sanic("Carbon_Minimiser")
 min = Minimiser()

@@ -1,5 +1,5 @@
-from carbon_api.carbon_api_wrapper.carbon import CarbonAPI
-from cache.cache import Cache
+from carbon_minimiser.carbon_api.carbon_api_wrapper.carbon import CarbonAPI
+from carbon_minimiser.minimiser_api.cache import Cache
 from itertools import islice
 from typing import List
 

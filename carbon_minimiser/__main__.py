@@ -1,6 +1,6 @@
-from minimiser_api.app import app, min
+from carbon_minimiser.minimiser_api.app import app, min
 import argparse
-from cache.cache import Cache
+from carbon_minimiser.minimiser_api.cache import Cache
 import threading
 
 def cache():

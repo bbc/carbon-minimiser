@@ -1,5 +1,5 @@
 import asyncio
-from carbon_api.carbon_api_wrapper.carbon import CarbonAPI, REGIONS
+from carbon_minimiser.carbon_api.carbon_api_wrapper.carbon import CarbonAPI, REGIONS
 import json
 
 class Cache:
