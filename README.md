@@ -27,6 +27,11 @@ By disabling the cache the UK Carbon Intensity API will be queried directly on e
 
 `python3 carbon_minimiser -p 8080`
 
+### Testing
+
+To run the suite of tests:
+
+`python3 -m pytest`
 ## Endpoints
 
 ### Get optimal time and location
