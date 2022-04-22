@@ -4,19 +4,28 @@ This API provides a series of optimisation functions against the UK Carbon Inten
 
 This allows you to decide the best time and location to run electricity-intensive operations.
 
-It currently only optimises across London and Manchester ("NW_ENGLAND" to the API) - but this can easily be expanded by extending [this](https://github.com/bbc/rd-carbon-intensity-exporter/blob/58da00a3428171b5cfd020044c5f378faa3ff2a4/carbon_minimiser/api/app.py#L8) list.
-
 ## Running the API
+
+### Set up
+
+* Set up a virtual environment:
+`python3 -m venv .venv`
+
+* Activate environment:
+`source .venv/bin/activate`
+
+* Install dependencies:
+`pip install -r requirements.txt`
 
 ### With caching (recommended)
 To reduce the demand on the UK Carbon Intensity API, a cache is provided. This updates the cache at 30 minute intervals (the same as the Carbon Intensity API), and vastly increases response times. To run this, run with the `-c` flag:
 
-`python3 __main__.py -c -p 8080`
+`python3 carbon_minimiser -c -p 8080`
 
 ### Without caching (not recommended)
 By disabling the cache the UK Carbon Intensity API will be queried directly on each request. This increases demand on their API and increases latency. To run this option, run without the `-c` flag:
 
-`python3 __main__.py -p 8080`
+`python3 carbon_minimiser -p 8080`
 
 ## Endpoints
 
