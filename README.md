@@ -50,7 +50,7 @@ By disabling the cache the UK Carbon Intensity API will be queried directly on e
       "location": str
     }`
 
-* **Sample Call:** `curl http://test.mist.rd.bbc.co.uk:8000/optimise?results=2`
+* **Sample Call:** `curl http://localhost:8080/optimise?results=2`
 
 ### Get optimal location right now
 #### Returns the place with the lowest carbon intensity currently
@@ -68,7 +68,7 @@ By disabling the cache the UK Carbon Intensity API will be queried directly on e
       "index": str
     }`
 
-* **Sample Call:** `curl http://test.mist.rd.bbc.co.uk:8000/optimise/location`
+* **Sample Call:** `curl http://localhost:8080/optimise/location`
 
 ### Get optimal time for a given location
 #### Returns the time over the next 48 hours with the lowest carbon intensity, in the specified location
@@ -97,7 +97,7 @@ By disabling the cache the UK Carbon Intensity API will be queried directly on e
   * **Code:** 404 <br />
     **Content:** `"Location not found"`
 
-* **Sample Call:** `curl http://test.mist.rd.bbc.co.uk:8000/optimise/location/london?results=3`
+* **Sample Call:** `curl http://localhost:8080/optimise/location/london?results=3`
 
 ### Get optimal time window for a location
 #### Given a time window of H hours, returns the optimal start time to minimise carbon usage over H hours
@@ -126,7 +126,7 @@ By disabling the cache the UK Carbon Intensity API will be queried directly on e
   * **Code:** 404 <br />
     **Content:** `"Location not found"`
 
-* **Sample Call:** `curl http://test.mist.rd.bbc.co.uk:8000/optimise/location/london/window/5?results=3`
+* **Sample Call:** `curl http://localhost:8080/optimise/location/london/window/5?results=3`
 
 ### Get optimal time window and location
 #### Given a time window of H hours, returns the optimal start time and location to minimise carbon over H hours
@@ -155,4 +155,4 @@ By disabling the cache the UK Carbon Intensity API will be queried directly on e
   * **Code:** 404 <br />
     **Content:** `"Location not found"`
 
-* **Sample Call:** `curl http://test.mist.rd.bbc.co.uk:8000/optimise/location/window/5?results=2`
+* **Sample Call:** `curl http://localhost:8080/optimise/location/window/5?results=2`
