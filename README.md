@@ -1,8 +1,24 @@
 **Carbon Minimisation API**
 ----
-This API provides a series of optimisation functions against the UK Carbon Intensity API.
+# Background
+The National Grid have created [a Carbon Intensity API for the UK](https://api.carbonintensity.org.uk/). This allows for the programmatic access of predictions for carbon intensity across England, Scotland, and Wales.
 
-This allows you to decide the best time and location to run electricity-intensive operations.
+This information allows you to estimate the optimal time to perform actions to reduce their impact on the planet, by choosing times when your area has a lower carbon intensity.
+
+# What this API does
+
+This API allows you to answer questions like:
+
+```What is the best 4 hour window to charge my electric car?```
+
+or
+
+```Which UK server location should I deploy this intensive process to?```
+
+# Important Note
+
+You have to host your own version of this API. Feel free to make one publically available - but remember requests to this API result in multiple requests to the UK Carbon Intensity API, so please use the caching option provided.
+
 
 ## Running the API
 
