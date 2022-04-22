@@ -1,6 +1,7 @@
 import asyncio
 from carbon_minimiser.carbon_api.carbon_api_wrapper.carbon import CarbonAPI, REGIONS
 import json
+from datetime import date, datetime
 
 class Cache:
     def __init__(self, refresh_rate):
@@ -20,7 +21,7 @@ class Cache:
             await task()  # repeated run of task
 
     async def create_cache(self):
-        self.cache = {}
+        self.cache = {"created": datetime.now().isoformat()}
         for functions in self.functions:
             func = functions['func']
             self.cache[func.__name__] = {}
