@@ -20,7 +20,7 @@ sanic==22.3.1
 sanic-routing==22.3.0
 tomli==2.0.1
 typing-extensions==4.2.0
-ujson==5.2.0
+ujson==5.4.0
 uvloop==0.16.0
 websockets==10.3
 yarl==1.7.2
