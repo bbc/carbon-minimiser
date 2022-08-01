@@ -1,4 +1,6 @@
-                                 Apache License
+*Notice: The Carbon Minimiser has been released to help reduce CO2 emissions and tackle climate change in line with the BBC R&D’s public service mission. Usage of the Carbon Minimiser's API Wrapper by default requires information from the National Grid’s Carbon Intensity API. The Carbon Intensity API (or any access to it) is not offered/provided by the BBC and it is licensed by the National Grid under separate (non-BBC) terms of use. You must read any applicable terms set out by the National Grid before using the Carbon Minimiser with information from their Carbon Intensity API. When fetching data from https://api.carbonintensity.org.uk/ you will be accessing a non-BBC data source. The BBC makes no warranties of any kind.*
+
+                                Apache License
                            Version 2.0, January 2004
                         http://www.apache.org/licenses/
 
