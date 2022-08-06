@@ -16,7 +16,7 @@ pluggy==1.0.0
 py==1.11.0
 pyparsing==3.0.8
 pytest==7.1.1
-sanic==22.3.1
+sanic==22.6.1
 sanic-routing==22.3.0
 tomli==2.0.1
 typing-extensions==4.2.0
