@@ -1,4 +1,4 @@
-**Carbon Minimisation API**
+# Carbon Minimisation API
 ----
 # Background
 The National Grid have created [a Carbon Intensity API for Great Britain](https://api.carbonintensity.org.uk/). This allows you to access to predictions for carbon intensity across England, Scotland, and Wales.
