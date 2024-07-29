@@ -11,12 +11,12 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from asynctest import TestCase, mock
+from unittest import mock, IsolatedAsyncioTestCase
 from carbon_minimiser.carbon_api.carbon_api_wrapper.carbon import CarbonAPI
 from carbon_minimiser.carbon_api.carbon_api_wrapper.api_connection import ApiConnection
 
 
-class TestCarbonAPI(TestCase):
+class TestCarbonAPI(IsolatedAsyncioTestCase):
     @classmethod
     def setUpClass(cls):
         cls.carbon = CarbonAPI()
