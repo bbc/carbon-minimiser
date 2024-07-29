@@ -20,9 +20,6 @@ import carbon_minimiser.config as CONFIG
 
 LOCATIONS = CONFIG.locations
 
-app = Sanic("Carbon_Minimiser")
-min = Minimiser()
-
 def round_to_half_int(number):
     return round(number * 2) / 2
 
@@ -52,63 +49,74 @@ def limit_results(num_results, time_range):
     max_results = int((time_range[1] - time_range[0])*2)
     return num_results if num_results < max_results else max_results
 
-@app.get('/')
-async def root(request):
-    return json("Carbon Minimiser")
 
-@app.get('/timestamp')
-async def root(request):
-    try:
-        result = await min.cache_timestamp() 
-    except KeyError:
-        result = "Cache not found"
-    return json(result)
+def create_app():
+    app = Sanic("Carbon_Minimiser")
+    min = Minimiser()
+    min.set_cache(True, CONFIG.cache_refresh) if CONFIG.cache else min.set_cache(False)
+    attach_endpoints(app, min)
+    return app
 
 
-@app.get('/optimise')
-async def optimal_time_and_location(request):
-    time_range = get_time_range(request)
-    num_results = limit_results(get_num_results(request), time_range)
-    result = await min.optimal_time_and_location(LOCATIONS, num_options=num_results, time_range=time_range)
-    return json(result)
+def attach_endpoints(app, min):
+    @app.get('/')
+    async def root(request):
+        return json("Carbon Minimiser")
 
 
-@app.get('/optimise/location')
-async def optimal_location(request):
-    result = await min.optimal_location_now(LOCATIONS)
-    return json(result)
-
-
-@app.get('/optimise/location/<location>')
-async def optimal_time_for_location(request, location):
-    location = location.upper()
-    time_range = get_time_range(request)
-    num_results = limit_results(get_num_results(request), time_range)
-    if location in LOCATIONS:
-        result = await min.optimal_time_for_location(location, num_options=num_results, time_range=time_range)
+    @app.get('/timestamp')
+    async def timestamp(request):
+        try:
+            result = await min.cache_timestamp() 
+        except KeyError:
+            result = "Cache not found"
         return json(result)
-    else:
-        return json("Location not configured", 404)
 
 
-@app.get('/optimise/location/<location>/window/<window:float>')
-async def optimal_time_window_for_location(request, location, window):
-    location = location.upper()
-    time_range = get_time_range(request)
-    num_results = limit_results(get_num_results(request), time_range)
-    if location in LOCATIONS:
-        result = await min.optimal_time_window_for_location(location, 
-                                                            window, 
-                                                            num_options=num_results,
-                                                            time_range=time_range)
+    @app.get('/optimise')
+    async def optimal_time_and_location(request):
+        time_range = get_time_range(request)
+        num_results = limit_results(get_num_results(request), time_range)
+        result = await min.optimal_time_and_location(LOCATIONS, num_options=num_results, time_range=time_range)
         return json(result)
-    else:
-        return json("Location not configured", 404)
 
 
-@app.get('/optimise/location/window/<window:float>')
-async def optimal_time_window_and_location(request, window):
-    time_range = get_time_range(request)
-    num_results = limit_results(get_num_results(request), time_range)
-    result = await min.optimal_time_window_and_location(LOCATIONS, window, num_options=num_results, time_range=time_range)
-    return json(result)
+    @app.get('/optimise/location')
+    async def optimal_location(request):
+        result = await min.optimal_location_now(LOCATIONS)
+        return json(result)
+
+
+    @app.get('/optimise/location/<location>')
+    async def optimal_time_for_location(request, location):
+        location = location.upper()
+        time_range = get_time_range(request)
+        num_results = limit_results(get_num_results(request), time_range)
+        if location in LOCATIONS:
+            result = await min.optimal_time_for_location(location, num_options=num_results, time_range=time_range)
+            return json(result)
+        else:
+            return json("Location not configured", 404)
+
+
+    @app.get('/optimise/location/<location>/window/<window:float>')
+    async def optimal_time_window_for_location(request, location, window):
+        location = location.upper()
+        time_range = get_time_range(request)
+        num_results = limit_results(get_num_results(request), time_range)
+        if location in LOCATIONS:
+            result = await min.optimal_time_window_for_location(location, 
+                                                                window, 
+                                                                num_options=num_results,
+                                                                time_range=time_range)
+            return json(result)
+        else:
+            return json("Location not configured", 404)
+
+
+    @app.get('/optimise/location/window/<window:float>')
+    async def optimal_time_window_and_location(request, window):
+        time_range = get_time_range(request)
+        num_results = limit_results(get_num_results(request), time_range)
+        result = await min.optimal_time_window_and_location(LOCATIONS, window, num_options=num_results, time_range=time_range)
+        return json(result)

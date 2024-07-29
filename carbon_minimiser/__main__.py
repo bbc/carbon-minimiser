@@ -1,10 +1,15 @@
-from carbon_minimiser.minimiser_api.app import app, min
+from carbon_minimiser.minimiser_api.app import create_app
 import carbon_minimiser.config as CONFIG
+from sanic import Sanic
+from sanic.worker.loader import AppLoader
+from functools import partial
+
 
 def main(port):
-    app.run(host='0.0.0.0', port=port)
-
-min.set_cache(True, CONFIG.cache_refresh) if CONFIG.cache else min.set_cache(False)
+    loader = AppLoader(factory=partial(create_app))
+    app = loader.load()
+    app.prepare(port=port)
+    Sanic.serve(primary=app, app_loader=loader)
     
 port = CONFIG.port
 
