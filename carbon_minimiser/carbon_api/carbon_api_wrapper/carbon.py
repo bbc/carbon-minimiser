@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from .api_connection import ApiConnection
-from datetime import datetime
+from datetime import datetime, UTC
 
 REGIONS = {
     'N_SCOTLAND': 1, 'S_SCOTLAND': 2, 'NW_ENGLAND': 3, 'NE_ENGLAND': 4, 'YORKSHIRE': 5, 'N_WALES': 6, 'S_WALES': 7,
@@ -93,7 +93,7 @@ class CarbonAPI:
     """
     async def national_forecast_single(self, hours):
         try:
-            json = await self.api.get(f"intensity/{datetime.utcnow().isoformat()}/fw48h")
+            json = await self.api.get(f"intensity/{datetime.now(UTC).isoformat()}/fw48h")
             # endpoint returns half hourly predictions from current half hour rounded
             # so index 2n gives n hours from now. Max time is therefore 47.5 hours
             index = int(hours*2) if hours < 48 else 95
@@ -111,7 +111,7 @@ class CarbonAPI:
     """
     async def national_forecast_range(self, hours):
         try:
-            json = await self.api.get(f"intensity/{datetime.utcnow().isoformat()}/fw48h")
+            json = await self.api.get(f"intensity/{datetime.now(UTC).isoformat()}/fw48h")
             # endpoint returns half hourly predictions from current half hour rounded
             index = int(hours*2) if hours < 48 else 95
             forecasts = json['data'][0: index + 1]
@@ -133,7 +133,7 @@ class CarbonAPI:
     """
     async def region_forecast_single(self, region, hours):
         try:
-            json = await self.api.get(f"regional/intensity/{datetime.utcnow().isoformat()}/fw48h/regionid/{REGIONS[region]}")
+            json = await self.api.get(f"regional/intensity/{datetime.now(UTC).isoformat()}/fw48h/regionid/{REGIONS[region]}")
             index = int(hours*2) if hours < 48 else 95
             prediction = json['data']['data'][index]['intensity']
             return prediction['forecast'], prediction['index']
@@ -150,7 +150,7 @@ class CarbonAPI:
     """
     async def region_forecast_range(self, region, hours):
         try:
-            json = await self.api.get(f"regional/intensity/{datetime.utcnow().isoformat()}/fw48h/regionid/{REGIONS[region]}")
+            json = await self.api.get(f"regional/intensity/{datetime.now(UTC).isoformat()}/fw48h/regionid/{REGIONS[region]}")
             index = int(hours*2) if hours < 48 else 95
             forecasts = json['data']['data'][0: index + 1]
             predictions = []
